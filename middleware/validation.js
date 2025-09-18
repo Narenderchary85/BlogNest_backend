@@ -1,8 +1,9 @@
 import jwt from 'jsonwebtoken';
 
 export const validateToken = (req, res, next) => {
-    const token = req.cookies.token;
-    console.log(token)
+  const token = req.cookies.token || 
+  req.headers["authorization"]?.split(" ")[1];
+    console.log("token",token)
     const key = "BLOGS";
     if (!token) {
       return res.status(401).json({ message: "Token missing in cookies" });
