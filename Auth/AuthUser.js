@@ -37,10 +37,10 @@ router.post("/signup",async(req,res)=>{
 
           res.cookie("token", token, {
             httpOnly: true,
-            secure: true,
-            sameSite: "None",
-            maxAge: 3 * 60 * 60 * 1000,
-          });
+            secure: process.env.NODE_ENV === "production",  
+            sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+            maxAge: 3 * 60 * 60 * 1000
+          });          
           
           res.status(200).json({
             message: "Signup Successful",
@@ -84,11 +84,11 @@ router.post("/login", async (req, res) => {
   
       res.cookie("token", token, {
         httpOnly: true,
-        secure: true,
-        sameSite: "None",
-        maxAge: 3 * 60 * 60 * 1000,
+        secure: process.env.NODE_ENV === "production",  
+        sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+        maxAge: 3 * 60 * 60 * 1000
       });
-
+      
       res.status(200).json({
         message: "Login Successful",
         status: true,
